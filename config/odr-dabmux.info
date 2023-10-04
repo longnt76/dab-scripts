@@ -2,7 +2,7 @@ general {
     dabmode 1
     nbframes 0
     syslog false
-    tist false
+    tist true
     managementport 12720
 }
 
@@ -11,89 +11,88 @@ remotecontrol {
     zmqendpoint tcp://lo:12722
 }
 
+; Some ensemble parameters
 ensemble {
-    id 0x4fff
-    ecc 0xe1
-    local-time-offset auto
-    international-table 1
-    reconfig-counter hash
-    label "Micro DAB"
-    shortlabel "M DAB"
+    id 0x6108	; BXL-BW 2; you can also use decimal if you want
+    ecc 0xe0	; Extended Country Code, 0xe0 = Belgium, 0xe3 = Netherlands		
+    local-time-offset auto  ; automatically calculate from system local time
+    label "SeeDAB+ 6D"
+    shortlabel "See6D"
 }
 
+; Definition of DAB services
 services {
-    srv-01 {
-        id 0xb1c7
-        ecc 0xe2
-        label "RADIO MONACO"
-        shortlabel "MONACO"
-        pty 10
-        pty-sd static
-        language 0x0f
-    }
-    srv-02 {
-        id 0xc479
-        ecc 0xe1
-        label "CAPITAL LONDON"
-        shortlabel "CAPITAL"
-        pty 10
-        pty-sd static
-        language 0x09
+    srv-Tipik {
+        id 0x6355
+        label "SeeTipik"
+	shortlabel "STipik"
+	pty	2			; Current Affairs/ Information
+	language 0x09			; english
+    }    
+    srv-TARMAC {
+        id 0x6359 
+        label "SeeTARMAC"
+	shortlabel "STARMAC"
+	pty	2			; Current Affairs/ Information
+	language 0x09			; english
+    }    
+    srv-NRJ+ {
+        id 0x63b5 
+        label "SeeNRJ+"
+	shortlabel "SNRJ+"
+	pty	2			; Current Affairs/ Information
+	language 0x09			; english
     }
 }
 
 subchannels {
-    sub-01 {
+    sub-Tipik {
         type dabplus
-        bitrate 128
+        inputfile "tcp://*:59000"
+        bitrate 64
         id 1
-        protection 3
-        inputproto edi
-        inputuri "tcp://127.0.0.1:9001"
-        buffer-management prebuffering
-        buffer 40
-        prebuffering 20
+        protection 1
+        zmq-buffer 80
+        zmq-prebuffering 20
     }
-    sub-02 {
+
+    sub-TARMAC {
         type dabplus
-        bitrate 128
+        inputfile "tcp://*:59001"
+        bitrate 64
         id 2
-        protection 3
-        inputproto edi
-        inputuri "tcp://127.0.0.1:9002"
-        buffer-management prebuffering
-        buffer 40
-        prebuffering 20
+        protection 1
+        zmq-buffer 80
+        zmq-prebuffering 20
+    }
+    
+    sub-NRJ+ {
+        type dabplus
+        inputfile "tcp://*:59002"
+        bitrate 64
+        id 3
+        protection 1
+        zmq-buffer 80
+        zmq-prebuffering 20
     }
 }
 
 components {
-    comp-01 {
-        service srv-01
-        subchannel sub-01
-        user-applications {
-            userapp "slideshow"
-        }
+    comp-Tipik {
+        service srv-Tipik
+        subchannel sub-Tipik
     }
-    comp-02 {
-        service srv-02
-        subchannel sub-02
-        user-applications {
-            userapp "slideshow"
-        }
+    comp-TARMAC {
+        service srv-TARMAC
+        subchannel sub-TARMAC
+    }
+    comp-NRJ+ {
+        service srv-NRJ+
+        subchannel sub-NRJ+
     }
 }
 
 outputs {
-    edi {
-        destinations {
-            edi_tcp {
-                protocol tcp
-                listenport 9201
-            }
-        }
-    }
-
-    ; Throttle output to real-time (one ETI frame every 24ms)
-    throttle "simul://"
+    throttle "simul://"	   
+    zmq "zmq+tcp://0.0.0.0:59100"    
 }

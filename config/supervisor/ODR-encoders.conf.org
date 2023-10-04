@@ -1,86 +1,79 @@
-# DAB-WEB-STREAM
+# P01
 [program:odr-padencoder-defee58a-f768-4ca9-a0f7-88f08b2e8748]
-command=/usr/local/bin/odr-padenc
- --dir=/home/odr/config/mot/P01/slides
- --erase
+command=odr-padenc
+ --dir=/home/pi/config/mot/P01/slide
  --sleep=0
- --dls=/home/odr/config/mot/P01/INFO.dls
+ --dls=/home/pi/config/mot/P01/INFO.dls
  --output=defee58a-f768-4ca9-a0f7-88f08b2e8748
  --label=12
  --label-ins=1200
-autostart=true
-autorestart=true
+autostart=false
+autorestart=false
 priority=10
-user=odr
-group=odr
+user=pi
+group=pi
 redirect_stderr=true
 stdout_logfile=/var/log/supervisor/odr-padencoder-defee58a-f768-4ca9-a0f7-88f08b2e8748.log
-delay_between_retries=10
 
-# DAB-WEB-STREAM
+# P01
 [program:odr-audioencoder-defee58a-f768-4ca9-a0f7-88f08b2e8748]
-command=/usr/local/bin/odr-audioenc
- --vlc-uri=https://radio.rtbf.be/tipik/mp3-160/me
+command=odr-audioenc
+ --vlc-uri=http://radiomonaco.ice.infomaniak.ch/radiomonaco-128.mp3
  --drift-comp
  --silence=60
- --bitrate=64
+ --bitrate=128
  --rate=48000
  --channels=2
  --aaclc
  --pad=34
  --pad-socket=defee58a-f768-4ca9-a0f7-88f08b2e8748
- --write-icy-text=/home/odr/config/mot/P01/INFO.dls
- -o tcp://127.0.0.1:59000
- -o tcp://127.0.0.1:58000
- --stats=/var/tmp/defee58a-f768-4ca9-a0f7-88f08b2e8748.stats
-autostart=true
-autorestart=true
+ --write-icy-text=/home/pi/config/mot/P01/INFO.dls
+ --edi tcp://127.0.0.1:9001
+ --stats=/var/tmp/P01.stats
+autostart=false
+autorestart=false
 priority=10
-user=odr
-group=odr
+user=pi
+group=pi
 redirect_stderr=true
 stdout_logfile=/var/log/supervisor/odr-audioencoder-defee58a-f768-4ca9-a0f7-88f08b2e8748.log
-delay_between_retries=10
 
-# DAB-PRE-MSG
+# P02
 [program:odr-padencoder-7158c498-1ef1-4580-b385-23a3c06ba985]
-command=/usr/local/bin/odr-padenc
- --dir=/home/odr/config/mot/P02
- --sleep=1
- --dls=/home/odr/config/mot/P02/INFO.dls
+command=odr-padenc
+ --dir=/home/pi/config/mot/P02/slide
+ --sleep=0
+ --dls=/home/pi/config/mot/P02/INFO.dls
  --output=7158c498-1ef1-4580-b385-23a3c06ba985
  --label=12
  --label-ins=1200
-autostart=true
-autorestart=true
+autostart=false
+autorestart=false
 priority=10
-user=odr
-group=odr
+user=pi
+group=pi
 redirect_stderr=true
 stdout_logfile=/var/log/supervisor/odr-padencoder-7158c498-1ef1-4580-b385-23a3c06ba985.log
-delay_between_retries=10
 
-# DAB-PRE-MSG
+# P02
 [program:odr-audioencoder-7158c498-1ef1-4580-b385-23a3c06ba985]
-command=/usr/local/bin/odr-audioenc
- --vlc-uri=file:///home/odr/audio/kp350/A04900211.wav
+command=odr-audioenc
+ --vlc-uri=http://media-ice.musicradio.com/CapitalMP3
  --drift-comp
  --silence=60
- --bitrate=64
+ --bitrate=128
  --rate=48000
  --channels=2
  --aaclc
  --pad=34
  --pad-socket=7158c498-1ef1-4580-b385-23a3c06ba985
- -o tcp://127.0.0.1:59001
- -o tcp://127.0.0.1:58001
- --stats=/var/tmp/7158c498-1ef1-4580-b385-23a3c06ba985.stats
-autostart=true
-autorestart=true
+ --write-icy-text=/home/pi/config/mot/P02/INFO.dls
+ --edi tcp://127.0.0.1:9002
+ --stats=/var/tmp/P02.stats
+autostart=false
+autorestart=false
 priority=10
-user=odr
-group=odr
+user=pi
+group=pi
 redirect_stderr=true
 stdout_logfile=/var/log/supervisor/odr-audioencoder-7158c498-1ef1-4580-b385-23a3c06ba985.log
-delay_between_retries=10
-
