@@ -61,8 +61,8 @@ install_base () {
 
 [inet_http_server]
 port = 8001
-username = odr ; Auth username
-password = odr ; Auth password
+username = see ; Auth username
+password = see ; Auth password
 EOF
   fi
 }

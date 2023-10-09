@@ -44,10 +44,10 @@ If you want to quickly play with the tools before installing anything on your ho
 1. Install the ODR-mmbTools suite and the sample configuration folder
    ```
    # Install the stable version of odr-mmbTools
-   sudo bash dab-scripts/install/mmbtools-get --branch master install
+   sudo bash dab-scripts/install/mmbtools-get --odr-user see --branch master install
 
    # Or install the development version of odr-mmbTools
-   sudo bash dab-scripts/install/mmbtools-get --branch next install
+   sudo bash dab-scripts/install/mmbtools-get --odr-user see --branch next install
    ```
 
 ### Notes
@@ -55,7 +55,7 @@ If you want to quickly play with the tools before installing anything on your ho
 	- You are not running **mmbtools-get** with `sudo`: you must thus specify the odr user profile
 	- You are running **mmbtools-get** with `sudo` and you do not want your current user to be the odr user profile
 1. **mmbtools-get** will create the user specified with `odr-user` if it does not exist:
-	- password: odr
+	- password: see
 	- additional groups: audio,dialout
 
 # Removal
